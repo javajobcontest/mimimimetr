@@ -14,6 +14,8 @@
 
 <div th:replace="layout/default.html :: header"></div>
 
+<h1 class="text-center">Топ котиков</h1>
+
 <!--/*@thymesVar id="cats" type="java.util.List<com.inovus.mimimimetr.model.CatDto>"*/-->
 <ul class="list-group" th:block th:each="cat: ${cats}">
     <li class="list-group-item">
