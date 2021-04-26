@@ -2,7 +2,7 @@ package com.inovus.mimimimetr.controller;
 
 import com.inovus.mimimimetr.exception.CustomException;
 import com.inovus.mimimimetr.model.Cat;
-import com.inovus.mimimimetr.model.CatDao;
+import com.inovus.mimimimetr.model.CatDto;
 import com.inovus.mimimimetr.model.User;
 import com.inovus.mimimimetr.service.CatService;
 import com.inovus.mimimimetr.util.Constants;
@@ -79,8 +79,8 @@ public class ViewsController {
         Cat second = catService.get(user.toVote.getSecondCatId());
         user.setToSession(request.getSession());
 
-        model.addAttribute("first", CatDao.fromCat(first));
-        model.addAttribute("second", CatDao.fromCat(second));
+        model.addAttribute("first", CatDto.fromCat(first));
+        model.addAttribute("second", CatDto.fromCat(second));
 
         return "pages/vote";
     }

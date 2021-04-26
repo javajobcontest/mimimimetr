@@ -14,7 +14,7 @@
 
 <div th:replace="layout/default.html :: header"></div>
 
-<!--/*@thymesVar id="cats" type="java.util.List<com.inovus.mimimimetr.model.CatDao>"*/-->
+<!--/*@thymesVar id="cats" type="java.util.List<com.inovus.mimimimetr.model.CatDto>"*/-->
 <ul class="list-group" th:block th:each="cat: ${cats}">
     <li class="list-group-item">
         <img th:src="${cat.pictureUrl}"/>

@@ -27,7 +27,7 @@
 <div class="row justify-content-center">
     <div class="col">
         <form action="/vote" method="post">
-            <!--/*@thymesVar id="first" type="com.inovus.mimimimetr.model.CatDao"*/-->
+            <!--/*@thymesVar id="first" type="com.inovus.mimimimetr.model.CatDto"*/-->
             <input type="hidden" name="votedId" th:value="${first.id}">
             <img onclick="this.parentNode.submit()" th:src="${first.pictureUrl}" height="400"/>
             <br>
@@ -37,7 +37,7 @@
 
     <div class="col">
         <form action="/vote" method="post">
-            <!--/*@thymesVar id="second" type="com.inovus.mimimimetr.model.CatDao"*/-->
+            <!--/*@thymesVar id="second" type="com.inovus.mimimimetr.model.CatDto"*/-->
             <input type="hidden" name="votedId" th:value="${second.id}">
             <img onclick="this.parentNode.submit()" th:src="${second.pictureUrl}" height="400"/>
             <br>
