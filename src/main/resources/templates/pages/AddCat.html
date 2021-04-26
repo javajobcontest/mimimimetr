@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <div th:replace="layout/default.html :: headerfiles"></div>
+</head>
+
+<body class="container">
+
+<div th:replace="layout/default.html :: header"></div>
+
+<h1 class="text-center">Добавление котика</h1>
+
+<div class="row justify-content-center">
+    <form
+            action="/addcat"
+            method="post"
+            class="col-lg-6 col-md-8 col-sm"
+    >
+        <fieldset>
+            <div class="row mb-2">
+                <label class="col-4" for="name">Имя котика</label>
+                <input required class="form-input col" type="text" name="name" id="name">
+            </div>
+            <div class="row mb-2">
+                <label class="col-4" for="picture">Ссылка на фотографию</label>
+                <input required class="form-input col" type="text" name="pictureUrl" id="picture">
+            </div>
+        </fieldset>
+        <div class="row">
+            <input class="form-submit col" type="submit" value="Добавить котика">
+        </div>
+    </form>
+
+    <!--/*@thymesVar id="message" type="java.lang.String"*/-->
+    <h5 class="text-center" th:if="${message}" th:text="${message}"></h5>
+</div>
+
+
+</body>
+
+</html>

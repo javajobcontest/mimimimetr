@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <div th:replace="layout/default.html :: headerfiles"></div>
+    <style>
+        img {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body class="container">
+
+<div th:replace="layout/default.html :: header"></div>
+
+<!--/*@thymesVar id="cats" type="java.util.List<com.inovus.mimimimetr.model.CatDao>"*/-->
+<ul class="list-group" th:block th:each="cat: ${cats}">
+    <li class="list-group-item">
+        <img th:src="${cat.pictureUrl}"/>
+        <br>
+        <p th:text="${cat.name}" class="text-center"></p>
+    </li>
+</ul>
+</body>
+</html>

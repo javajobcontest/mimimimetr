@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <div th:replace="layout/default.html :: headerfiles"></div>
+</head>
+
+<body class="container">
+<div th:replace="layout/default.html :: header"></div>
+
+<!--/*@thymesVar id="errorMessage" type="java.lang.String"*/-->
+<h5 th:if="${errorMessage}" th:text="${errorMessage}" class="text-center"></h5>
+
+</body>
+</html>

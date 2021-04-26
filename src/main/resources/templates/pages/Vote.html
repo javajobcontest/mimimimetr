@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <div th:replace="layout/default.html :: headerfiles"></div>
+    <style>
+        p {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+        }
+
+        img {
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body class="container">
+
+<div th:replace="layout/default.html :: header"></div>
+
+<h1 class="text-center">Мимимиметр</h1>
+<h3 class="text-center">Кто из них мимимишнее? Кликни по фотографии!</h3>
+
+<div class="row justify-content-center">
+    <div class="col">
+        <form action="/vote" method="post">
+            <!--/*@thymesVar id="first" type="com.inovus.mimimimetr.model.CatDao"*/-->
+            <input type="hidden" name="votedId" th:value="${first.id}">
+            <img onclick="this.parentNode.submit()" th:src="${first.pictureUrl}" height="400"/>
+            <br>
+            <p onclick="this.parentNode.submit()" th:text="${first.name}" class="text-center"></p>
+        </form>
+    </div>
+
+    <div class="col">
+        <form action="/vote" method="post">
+            <!--/*@thymesVar id="second" type="com.inovus.mimimimetr.model.CatDao"*/-->
+            <input type="hidden" name="votedId" th:value="${second.id}">
+            <img onclick="this.parentNode.submit()" th:src="${second.pictureUrl}" height="400"/>
+            <br>
+            <p onclick="this.parentNode.submit()" th:text="${second.name}" class="text-center"></p>
+        </form>
+    </div>
+</div>
+</body>
+</html>
