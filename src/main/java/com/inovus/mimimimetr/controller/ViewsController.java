@@ -72,7 +72,7 @@ public class ViewsController {
             user = new User();
         } else if (user.getSeenCatsId().size() == Constants.MAX_SEEN_CATS) {
             model.addAttribute("cats", catService.getTop());
-            return "pages/top";
+            return PagesEndpoints.TOP_PAGE;
         }
 
         if (user.getToVote() == null)
