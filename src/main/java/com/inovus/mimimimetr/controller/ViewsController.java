@@ -97,6 +97,7 @@ public class ViewsController {
 
         if (user == null)
             throw new CustomException();
+
         if (!user.getToVote().contains(votedId))
             throw new CustomException();
 
