@@ -6,6 +6,7 @@ import com.inovus.mimimimetr.model.CatDto;
 import com.inovus.mimimimetr.model.User;
 import com.inovus.mimimimetr.service.CatService;
 import com.inovus.mimimimetr.util.Constants;
+import com.inovus.mimimimetr.util.PagesEndpoints;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,15 +21,17 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/")
 @RequiredArgsConstructor
 public class ViewsController {
+    private static final String ADD_CAT_ENDPOINT = "addcat";
+    private static final String VOTE_ENDPOINT = "addcat";
 
     private final CatService catService;
 
-    @GetMapping("addcat")
+    @GetMapping(ADD_CAT_ENDPOINT)
     public String addCat() {
-        return "pages/addCat";
+        return PagesEndpoints.ADD_CAT_PAGE;
     }
 
-    @PostMapping("addcat")
+    @PostMapping(ADD_CAT_ENDPOINT)
     public String addCat(
             @RequestParam String name,
             @RequestParam String pictureUrl,
@@ -38,7 +41,7 @@ public class ViewsController {
                 || pictureUrl == null || pictureUrl.isEmpty()
         ) {
             model.addAttribute("message", "Форма заполнена неверно...");
-            return "pages/addCat";
+            return PagesEndpoints.ADD_CAT_PAGE;
         }
 
         Cat cat = new Cat();
@@ -52,10 +55,10 @@ public class ViewsController {
         else
             model.addAttribute("message", "Не удалось добавить котика...");
 
-        return "pages/addCat";
+        return PagesEndpoints.ADD_CAT_PAGE;
     }
 
-    @GetMapping("vote")
+    @GetMapping(VOTE_ENDPOINT)
     public String vote(
             HttpServletRequest request,
             Model model
@@ -82,10 +85,10 @@ public class ViewsController {
         model.addAttribute("first", CatDto.fromCat(first));
         model.addAttribute("second", CatDto.fromCat(second));
 
-        return "pages/vote";
+        return PagesEndpoints.VOTE_PAGE;
     }
 
-    @PostMapping("vote")
+    @PostMapping(VOTE_ENDPOINT)
     public String vote(
             @RequestParam Long votedId,
             HttpServletRequest request
@@ -105,6 +108,6 @@ public class ViewsController {
         user.setToVote(null);
 
         user.setToSession(request.getSession());
-        return "redirect:/vote";
+        return "redirect:/" + VOTE_ENDPOINT;
     }
 }
