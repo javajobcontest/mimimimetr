@@ -15,7 +15,7 @@ public class AppExceptionsHandler {
 
     @ExceptionHandler(Exception.class)
     public String handleAll(Model model, Exception e) {
-        model.addAttribute("errorMessage", e.getMessage());
+        model.addAttribute("errorMessage", "Возникла ошибка, попробуйте еще раз.");
         e.printStackTrace();
         return "index";
     }
