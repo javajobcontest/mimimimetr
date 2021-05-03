@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 public class ViewsController {
     private static final String ADD_CAT_ENDPOINT = "addcat";
-    private static final String VOTE_ENDPOINT = "addcat";
+    private static final String VOTE_ENDPOINT = "vote";
 
     private final CatService catService;
 
