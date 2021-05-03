@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/")
@@ -60,13 +61,13 @@ public class ViewsController {
 
     @GetMapping(VOTE_ENDPOINT)
     public String vote(
-            HttpServletRequest request,
+            HttpSession session,
             Model model
     ) throws CustomException {
         if (catService.catsSize() < Constants.MIN_SIZE_TO_VOTE)
             throw new CustomException("Перед голосованием необходимо хотя бы " + Constants.MIN_SIZE_TO_VOTE + " котиков");
 
-        User user = User.getFromSession(request.getSession());
+        User user = User.getFromSession(session);
 
         if (user == null) {
             user = new User();
@@ -80,7 +81,7 @@ public class ViewsController {
 
         Cat first = catService.get(user.getToVote().getFirstCatId());
         Cat second = catService.get(user.getToVote().getSecondCatId());
-        user.setToSession(request.getSession());
+        user.setToSession(session);
 
         model.addAttribute("first", CatDto.fromCat(first));
         model.addAttribute("second", CatDto.fromCat(second));
@@ -91,9 +92,9 @@ public class ViewsController {
     @PostMapping(VOTE_ENDPOINT)
     public String vote(
             @RequestParam Long votedId,
-            HttpServletRequest request
+            HttpSession session
     ) throws CustomException {
-        User user = User.getFromSession(request.getSession());
+        User user = User.getFromSession(session);
 
         if (user == null)
             throw new CustomException();
@@ -107,7 +108,7 @@ public class ViewsController {
         user.getSeenCatsId().add(user.getToVote().getSecondCatId());
         user.setToVote(null);
 
-        user.setToSession(request.getSession());
+        user.setToSession(session);
         return "redirect:/" + VOTE_ENDPOINT;
     }
 }
