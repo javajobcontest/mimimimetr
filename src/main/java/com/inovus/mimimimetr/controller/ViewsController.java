@@ -67,16 +67,16 @@ public class ViewsController {
 
         if (user == null) {
             user = new User();
-        } else if (user.seenCatsId.size() == Constants.MAX_SEEN_CATS) {
+        } else if (user.getSeenCatsId().size() == Constants.MAX_SEEN_CATS) {
             model.addAttribute("cats", catService.getTop());
             return "pages/top";
         }
 
-        if (user.toVote == null)
-            catService.fillNewToVote(user);
+        if (user.getToVote() == null)
+            catService.setNewToVote(user);
 
-        Cat first = catService.get(user.toVote.getFirstCatId());
-        Cat second = catService.get(user.toVote.getSecondCatId());
+        Cat first = catService.get(user.getToVote().getFirstCatId());
+        Cat second = catService.get(user.getToVote().getSecondCatId());
         user.setToSession(request.getSession());
 
         model.addAttribute("first", CatDto.fromCat(first));
@@ -94,15 +94,15 @@ public class ViewsController {
 
         if (user == null)
             throw new CustomException();
-        if (!user.toVote.contains(votedId))
+        if (!user.getToVote().contains(votedId))
             throw new CustomException();
 
         Cat cat = catService.get(votedId);
-        catService.addScore(cat);
+        catService.incrementScore(cat);
 
-        user.seenCatsId.add(user.toVote.getFirstCatId());
-        user.seenCatsId.add(user.toVote.getSecondCatId());
-        user.toVote = null;
+        user.getSeenCatsId().add(user.getToVote().getFirstCatId());
+        user.getSeenCatsId().add(user.getToVote().getSecondCatId());
+        user.setToVote(null);
 
         user.setToSession(request.getSession());
         return "redirect:/vote";

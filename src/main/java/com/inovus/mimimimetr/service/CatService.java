@@ -11,35 +11,19 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 @Service
 @RequiredArgsConstructor
 public class CatService {
-    private static Random random = new Random(0);
-
     private final CatRepo catRepo;
+    private static final Random random = new Random(0);
 
-    public long catsSize() {
-        return catRepo.count();
-    }
-
-    public void fillNewToVote(User user) {
-        List<Cat> cats = catRepo.findAll();
-
-        cats.removeIf(cat -> user.seenCatsId.contains(cat.getId()));
-
-        int index = random.nextInt(cats.size());
-        Cat first = cats.get(index);
-        cats.remove(index);
-
-        index = random.nextInt(cats.size());
-        Cat second = cats.get(index);
-
-        user.toVote = new User.ToVote(first.getId(), second.getId());
-    }
-
-    public List<Cat> getTop() {
-        return catRepo.findTop10OrByOrderByVoteScoreDesc();
+    public Cat add(Cat cat) {
+        return catRepo.save(cat);
     }
 
     public Cat get(Long catId) throws CustomException {
@@ -49,12 +33,31 @@ public class CatService {
         return result.get();
     }
 
-    public Cat add(Cat cat) {
-        return catRepo.save(cat);
+    public List<Cat> getTop() {
+        return catRepo.findTop10OrByOrderByVoteScoreDesc();
+    }
+
+    public long catsSize() {
+        return catRepo.count();
     }
 
     @Transactional
-    public void addScore(Cat cat) {
+    public void incrementScore(Cat cat) {
         catRepo.incrementScore(cat.getId());
+    }
+
+    public void setNewToVote(User user) {
+        List<Cat> availableCats = catRepo.findAll();
+        availableCats.removeIf(cat -> user.getSeenCatsId().contains(cat.getId()));
+
+        Supplier<Cat> getRandomCat = () -> {
+            int index = random.nextInt(availableCats.size());
+            return availableCats.remove(index);
+        };
+
+        Cat first = getRandomCat.get();
+        Cat second = getRandomCat.get();
+
+        user.setToVote(new User.ToVote(first.getId(), second.getId()));
     }
 }

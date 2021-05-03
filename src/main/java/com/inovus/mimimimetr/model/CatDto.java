@@ -6,9 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CatDto {
-    public Long id;
-    public String name;
-    public String pictureUrl;
+    private Long id;
+    private String name;
+    private String pictureUrl;
 
     public static CatDto fromCat(Cat cat) {
         CatDto catDto = new CatDto();

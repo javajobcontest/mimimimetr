@@ -2,20 +2,17 @@ package com.inovus.mimimimetr.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Getter
 @Setter
 public class User {
-
-    public List<Long> seenCatsId;
-    public ToVote toVote;
+    private List<Long> seenCatsId;
+    private ToVote toVote;
 
     public User() {
         this.seenCatsId = new ArrayList<>();
@@ -40,5 +37,4 @@ public class User {
             return catId != null && (catId.equals(firstCatId) || catId.equals(secondCatId));
         }
     }
-
 }
